@@ -1,111 +1,177 @@
-# ☸️ Kubernetes & Google Kubernetes Engine Labs
+# ☸️ Kubernetes & Google Kubernetes Engine — Hands-on Labs
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
 ![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
-![GKE](https://img.shields.io/badge/GKE-Cloud%20Kubernetes-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
+![GKE](https://img.shields.io/badge/GKE-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-> 🚀 Hands-on Kubernetes and Google Kubernetes Engine learning repository containing labs, commands, deployment strategies, troubleshooting, monitoring and container deployment.
+> My hands-on journey of learning Kubernetes, Google Kubernetes Engine (GKE), deployments, rollout strategies, monitoring, troubleshooting, Docker and Artifact Registry.
 
 ---
 
 # 📚 About This Repository
 
-This repository contains my hands-on learning and practical implementation of:
+This repository contains my practical work from Google Cloud Kubernetes labs.
 
-- Kubernetes fundamentals
-- Google Kubernetes Engine (GKE)
-- Kubernetes Deployments
-- ReplicaSets
-- Pods
-- Services
-- Scaling
-- Rolling Updates
-- Rollbacks
-- Canary Deployments
-- Blue-Green Deployments
-- Managed Prometheus
-- Pod Monitoring
-- Logs-based Metrics
-- Alerting Policies
-- Artifact Registry
-- Docker containerization
-- Application deployment on GKE
+The focus is on understanding how Kubernetes applications are:
 
-The objective is to understand not only **how to run Kubernetes commands**, but also **why and when each Kubernetes deployment strategy is used**.
+- Deployed
+- Scaled
+- Updated
+- Monitored
+- Debugged
+- Rolled back
+- Exposed to users
+- Containerized
+- Released using different deployment strategies
+
+The labs helped me move from basic Kubernetes concepts toward practical GKE and DevOps workflows.
 
 ---
 
-# 🧠 Kubernetes Architecture
+# 🗺️ Learning Journey
 
 ```text
-                    ┌──────────────────────────┐
-                    │        User / Client     │
-                    └────────────┬─────────────┘
-                                 │
-                                 ▼
-                    ┌──────────────────────────┐
-                    │      LoadBalancer        │
-                    │        Service           │
-                    └────────────┬─────────────┘
-                                 │
-                  ┌──────────────┴──────────────┐
-                  │                             │
-                  ▼                             ▼
-        ┌─────────────────┐           ┌─────────────────┐
-        │   Deployment    │           │   Deployment    │
-        │      Blue       │           │      Green      │
-        └────────┬────────┘           └────────┬────────┘
-                 │                             │
-          ┌──────┼──────┐              ┌──────┼──────┐
-          ▼      ▼      ▼              ▼      ▼      ▼
-        Pod    Pod    Pod            Pod    Pod    Pod
+Containers
+    ↓
+Kubernetes
+    ↓
+Pods
+    ↓
+Deployments
+    ↓
+ReplicaSets
+    ↓
+Services
+    ↓
+Scaling
+    ↓
+Rolling Updates
+    ↓
+Rollback
+    ↓
+Canary Deployment
+    ↓
+Blue-Green Deployment
+    ↓
+GKE
+    ↓
+Managed Prometheus
+    ↓
+Monitoring
+    ↓
+Logging & Alerting
+    ↓
+Artifact Registry
+    ↓
+Docker + GKE Deployment
 ````
+
 
 # 🧪 Labs Completed
 
-## 1️⃣ Managing Deployments Using Kubernetes Engine
-
-**Lab:** GSP053
-
-### Topics Covered
-
-* `kubectl`
-* Deployment YAML
-* Deployment creation
-* ReplicaSets
-* Pods
-* Kubernetes Services
-* Scaling
-* Rolling Updates
-* Rollout History
-* Pause / Resume Rollouts
-* Rollback
-* Canary Deployment
-* Blue-Green Deployment
+| # | Lab                                          | GSP     | Status      |
+| - | -------------------------------------------- | ------- | ----------- |
+| 1 | Kubernetes Fundamentals / Practice           | GSP736  | ✅ Completed |
+| 2 | Kubernetes / GKE Hands-on Practice           | GSP1026 | ✅ Completed |
+| 3 | Managing Deployments Using Kubernetes Engine | GSP053  | ✅ Completed |
+| 4 | GKE Challenge Lab                            | GSP510  | ✅ Completed |
 
 ---
 
-# 🚀 Kubernetes Deployment
+# 🚀 LAB 3 — Managing Deployments Using Kubernetes Engine
 
-A Deployment manages a group of Pods and makes it easier to:
+## GSP053
 
-* Deploy applications
-* Scale applications
-* Update applications
-* Roll back applications
+### 🎯 Objectives
 
-Example:
+In this lab I practiced:
+
+* Using `kubectl`
+* Understanding Deployment objects
+* Creating Deployment YAML files
+* Launching applications
+* Scaling Deployments
+* Performing rolling updates
+* Pausing and resuming rollouts
+* Rolling back deployments
+* Canary deployments
+* Blue-Green deployments
+* Working with Kubernetes Services
+
+---
+
+# 1️⃣ Kubernetes Deployment Object
+
+First, I explored the Deployment object using:
 
 ```bash
-kubectl create -f deployment.yaml
+kubectl explain deployment
 ```
 
-Check deployments:
+For detailed information:
+
+```bash
+kubectl explain deployment --recursive
+```
+
+Specific field:
+
+```bash
+kubectl explain deployment.metadata.name
+```
+
+### Concept
+
+```text
+Deployment
+     ↓
+ReplicaSet
+     ↓
+Pods
+```
+
+A Deployment manages ReplicaSets, and ReplicaSets maintain the desired number of Pods.
+
+---
+
+# 2️⃣ Create Fortune Application
+
+The lab used:
+
+```text
+Deployment:
+fortune-app-blue
+
+Replicas:
+3
+
+Version:
+1.0.0
+```
+
+Deployment was created using:
+
+```bash
+kubectl create -f deployments/fortune-app-blue.yaml
+```
+
+Check Deployment:
 
 ```bash
 kubectl get deployments
 ```
+
+### Expected Output
+
+```text
+NAME               READY   UP-TO-DATE   AVAILABLE
+fortune-app-blue   3/3     3            3
+```
+
+---
+
+# 3️⃣ ReplicaSet
 
 Check ReplicaSets:
 
@@ -113,20 +179,90 @@ Check ReplicaSets:
 kubectl get replicasets
 ```
 
+### Expected Output
+
+```text
+NAME                         DESIRED   CURRENT   READY
+fortune-app-blue-xxxxxxxx   3         3         3
+```
+
+The exact suffix is generated by Kubernetes and will be different for each deployment.
+
+---
+
+# 4️⃣ Pods
+
 Check Pods:
 
 ```bash
 kubectl get pods
 ```
 
+### Expected Output
+
+```text
+NAME                              READY   STATUS    RESTARTS
+fortune-app-blue-xxxxxxxx-abc    1/1     Running   0
+fortune-app-blue-xxxxxxxx-def    1/1     Running   0
+fortune-app-blue-xxxxxxxx-ghi    1/1     Running   0
+```
+
 ---
 
-# 📈 Scaling
+# 5️⃣ Expose Application
 
-Scale a Deployment:
+Create the Service:
+
+```bash
+kubectl create -f services/fortune-app.yaml
+```
+
+Check Service:
+
+```bash
+kubectl get services fortune-app
+```
+
+After the external IP becomes available:
+
+```bash
+curl http://<EXTERNAL-IP>/version
+```
+
+### Output
+
+```json
+{"version":"1.0.0"}
+```
+
+This confirmed that version `1.0.0` was running.
+
+---
+
+# 6️⃣ Scale Deployment
+
+Initially:
+
+```text
+3 Pods
+```
+
+Scale to 5:
 
 ```bash
 kubectl scale deployment fortune-app-blue --replicas=5
+```
+
+Verify:
+
+```bash
+kubectl get pods | grep fortune-app-blue | wc -l
+```
+
+### Output
+
+```text
+5
 ```
 
 Scale back:
@@ -138,45 +274,66 @@ kubectl scale deployment fortune-app-blue --replicas=3
 Verify:
 
 ```bash
-kubectl get pods
+kubectl get pods | grep fortune-app-blue | wc -l
+```
+
+### Output
+
+```text
+3
 ```
 
 ### Concept
 
 ```text
-Deployment
-     │
-     ▼
-ReplicaSet
-     │
- ┌───┼───┐
- ▼   ▼   ▼
-Pod Pod Pod
-```
-
-If we increase replicas from 3 → 5:
-
-```text
 3 Pods
   ↓
+Scale Up
+  ↓
 5 Pods
+  ↓
+Scale Down
+  ↓
+3 Pods
 ```
-
-Kubernetes automatically creates the additional Pods.
 
 ---
 
-# 🔄 Rolling Update
+# 7️⃣ Rolling Update
 
-Rolling Update allows us to update an application without taking the entire application offline.
+The application was updated from:
 
-Example:
+```text
+Version 1.0.0
+        ↓
+Version 2.0.0
+```
+
+Edit the Deployment:
 
 ```bash
 kubectl edit deployment fortune-app-blue
 ```
 
-Change:
+Change the image from:
+
+```text
+fortune-service:1.0.0
+```
+
+to:
+
+```text
+fortune-service:2.0.0
+```
+
+Also update:
+
+```text
+APP_VERSION
+```
+
+from:
 
 ```text
 1.0.0
@@ -188,45 +345,112 @@ to:
 2.0.0
 ```
 
-Check rollout:
+Save:
 
-```bash
-kubectl rollout status deployment/fortune-app-blue
+```text
+Esc
+:wq
+Enter
 ```
 
-View rollout history:
+---
+
+# 8️⃣ ReplicaSet During Rolling Update
+
+Check:
+
+```bash
+kubectl get replicasets
+```
+
+Kubernetes creates a new ReplicaSet for the new version.
+
+Conceptually:
+
+```text
+Old ReplicaSet
+Version 1.0.0
+      ↓
+New ReplicaSet
+Version 2.0.0
+```
+
+Pods are gradually replaced.
+
+---
+
+# 9️⃣ Rollout History
+
+Check rollout history:
 
 ```bash
 kubectl rollout history deployment/fortune-app-blue
 ```
 
+### Expected
+
+```text
+deployment.apps/fortune-app-blue
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+```
+
 ---
 
-# ⏸️ Pause Rolling Update
+# 🔟 Pause Rolling Update
+
+Pause:
 
 ```bash
 kubectl rollout pause deployment/fortune-app-blue
 ```
 
-Check status:
+Check:
 
 ```bash
 kubectl rollout status deployment/fortune-app-blue
 ```
 
+During the paused rollout, both versions can exist.
+
+```text
+Version 1.0.0
+     +
+Version 2.0.0
+     ↓
+Mixed Pods
+```
+
+This allows us to inspect the application before completing the rollout.
+
 ---
 
-# ▶️ Resume Rolling Update
+# 1️⃣1️⃣ Resume Rolling Update
+
+Resume:
 
 ```bash
 kubectl rollout resume deployment/fortune-app-blue
 ```
 
+Check:
+
+```bash
+kubectl rollout status deployment/fortune-app-blue
+```
+
+### Expected
+
+```text
+deployment "fortune-app-blue" successfully rolled out
+```
+
 ---
 
-# ↩️ Rollback
+# 1️⃣2️⃣ Rollback
 
-If the new version has a problem:
+If version `2.0.0` has a bug:
 
 ```bash
 kubectl rollout undo deployment/fortune-app-blue
@@ -238,118 +462,196 @@ Verify:
 kubectl rollout status deployment/fortune-app-blue
 ```
 
-### Easy Memory Trick
+Check application:
+
+```bash
+curl http://`kubectl get svc fortune-app -o=jsonpath="{.status.loadBalancer.ingress[0].ip}"`/version
+```
+
+### Expected
+
+```json
+{"version":"1.0.0"}
+```
+
+### Key Concept
 
 ```text
-Deploy
-  ↓
-Update
-  ↓
-Problem?
-  ↓
+Version 1.0.0
+      ↓
+Version 2.0.0
+      ↓
+Problem
+      ↓
 Rollback
+      ↓
+Version 1.0.0
 ```
 
 ---
 
-# 🐤 Canary Deployment
+# 🐤 13️⃣ Canary Deployment
 
-Canary deployment means:
+Canary deployment allows us to test a new version with only a small portion of traffic.
 
-> Send only a small amount of traffic to the new version first.
+Create:
 
-Example:
-
-```text
-Users
-  │
-  ▼
-Service
-  │
-  ├───────────────┐
-  ▼               ▼
-Version 1.0      Version 2.0
-  │               │
-  │               │
-  │               └── Small traffic
-  │
-  └── Majority traffic
+```bash
+kubectl create -f deployments/fortune-app-canary.yaml
 ```
 
-Advantages:
+Check:
 
-* Safer releases
-* Test new version with real traffic
-* Reduce deployment risk
+```bash
+kubectl get deployments
+```
+
+Now two Deployments exist:
+
+```text
+fortune-app-blue
+fortune-app-canary
+```
+
+The Service selects:
+
+```text
+app: fortune-app
+```
+
+Therefore, Pods from both deployments can receive traffic.
 
 ---
 
-# 🔵🟢 Blue-Green Deployment
+# Test Canary
 
-Blue-Green deployment keeps two versions available.
-
-```text
-              Service
-                 │
-       ┌─────────┴─────────┐
-       ▼                   ▼
-    🔵 BLUE             🟢 GREEN
-    v1.0                  v2.0
+```bash
+for i in {1..10}; do curl -s http://`kubectl get svc fortune-app -o=jsonpath="{.status.loadBalancer.ingress[0].ip}"`/version; echo; done
 ```
 
-Initially:
+### Representative Output
 
 ```text
-Service → BLUE
+{"version":"1.0.0"}
+{"version":"1.0.0"}
+{"version":"1.0.0"}
+{"version":"2.0.0"}
+{"version":"1.0.0"}
+{"version":"1.0.0"}
+{"version":"2.0.0"}
+{"version":"1.0.0"}
+{"version":"1.0.0"}
+{"version":"1.0.0"}
 ```
 
-After testing:
+Most traffic goes to `1.0.0`, while a smaller portion reaches `2.0.0`.
+
+### Canary Concept
 
 ```text
-Service → GREEN
+                 Service
+                    │
+          ┌─────────┴─────────┐
+          ↓                   ↓
+       BLUE                 CANARY
+      v1.0.0                v2.0.0
+       90%                    10%
+```
+
+---
+
+# 🔵🟢 14️⃣ Blue-Green Deployment
+
+Blue-Green deployment maintains two complete versions:
+
+```text
+🔵 BLUE  → v1.0.0
+
+🟢 GREEN → v2.0.0
+```
+
+First point the Service to Blue:
+
+```bash
+kubectl apply -f services/fortune-app-blue-service.yaml
+```
+
+Create Green:
+
+```bash
+kubectl create -f deployments/fortune-app-green.yaml
+```
+
+Verify current version:
+
+```bash
+curl http://`kubectl get svc fortune-app -o=jsonpath="{.status.loadBalancer.ingress[0].ip}"`/version
+```
+
+### Output
+
+```json
+{"version":"1.0.0"}
+```
+
+Switch traffic to Green:
+
+```bash
+kubectl apply -f services/fortune-app-green-service.yaml
+```
+
+Verify:
+
+```bash
+curl http://`kubectl get svc fortune-app -o=jsonpath="{.status.loadBalancer.ingress[0].ip}"`/version
+```
+
+### Output
+
+```json
+{"version":"2.0.0"}
 ```
 
 Rollback:
 
-```text
-Service → BLUE
+```bash
+kubectl apply -f services/fortune-app-blue-service.yaml
 ```
 
-The important point is:
+Verify:
 
-> We switch traffic by changing the Service selector.
-
----
-
-# 🆚 Deployment Strategies
-
-| Strategy       | Main Idea                                |
-| -------------- | ---------------------------------------- |
-| Rolling Update | Gradually replace old Pods               |
-| Canary         | Send small traffic to new version        |
-| Blue-Green     | Keep two environments and switch traffic |
-| Rollback       | Return to previous version               |
+```json
+{"version":"1.0.0"}
+```
 
 ---
 
-# 2️⃣ GKE Challenge Lab
+# 🧠 Deployment Strategies Comparison
 
-**Lab:** GSP510
-
-This challenge lab tested practical GKE administration skills.
+| Strategy       | How it works                              | Main Benefit              |
+| -------------- | ----------------------------------------- | ------------------------- |
+| Rolling Update | Gradually replaces old Pods               | No full downtime          |
+| Canary         | Small traffic goes to new version         | Safe testing              |
+| Blue-Green     | Switches traffic between two environments | Instant version switch    |
+| Rollback       | Returns to previous version               | Recovery from bad release |
 
 ---
 
-# ☁️ GKE Cluster
+# ☁️ LAB 4 — GKE Challenge Lab
 
-Created a GKE cluster with:
+## GSP510
+
+This challenge lab tested practical GKE administration and troubleshooting.
+
+---
+
+# 1️⃣ Create GKE Cluster
+
+Cluster configuration:
 
 ```text
 Cluster Name:
 hello-world-ptyy
-
-Region:
-us-east1
 
 Zone:
 us-east1-b
@@ -370,11 +672,24 @@ Autoscaling:
 Enabled
 ```
 
+### Concept
+
+```text
+GKE Cluster
+     │
+     ├── Node 1
+     ├── Node 2
+     └── Node 3
+
+Autoscaler
+     │
+     ├── Minimum: 2
+     └── Maximum: 6
+```
+
 ---
 
-# 📊 Managed Prometheus
-
-Enabled Managed Prometheus on GKE for monitoring.
+# 2️⃣ Enable Managed Prometheus
 
 Created namespace:
 
@@ -382,11 +697,11 @@ Created namespace:
 kubectl create namespace gmp-hpxg
 ```
 
-Managed Prometheus allows Kubernetes workloads to expose metrics that can be collected and monitored.
+Downloaded:
 
----
-
-# 📦 Prometheus Application
+```bash
+gcloud storage cp gs://spls/gsp510/prometheus-app.yaml .
+```
 
 Configured:
 
@@ -397,21 +712,27 @@ nilebox/prometheus-example-app:latest
 Container:
 prometheus-test
 
-Port Name:
+Port:
 metrics
 ```
 
-Deployed inside:
+Deploy:
 
-```text
-gmp-hpxg
+```bash
+kubectl apply -f prometheus-app.yaml -n gmp-hpxg
 ```
 
 ---
 
-# 🔎 Pod Monitoring
+# 3️⃣ Pod Monitoring
 
-Configured PodMonitoring with:
+Downloaded:
+
+```bash
+gcloud storage cp gs://spls/gsp510/pod-monitoring.yaml .
+```
+
+Configured:
 
 ```text
 Name:
@@ -420,51 +741,74 @@ prometheus-test
 Label:
 app.kubernetes.io/name: prometheus-test
 
-Match Label:
+Match:
 app: prometheus-test
 
 Interval:
 45s
 ```
 
-Conceptually:
+Applied:
+
+```bash
+kubectl apply -f pod-monitoring.yaml -n gmp-hpxg
+```
+
+### Monitoring Architecture
 
 ```text
 Prometheus
      │
-     │ collects metrics
      ▼
 PodMonitoring
      │
      ▼
-prometheus-test Pods
+prometheus-test
+     │
+ ┌───┼───┐
+ ▼   ▼   ▼
+Pod Pod Pod
 ```
 
 ---
 
-# 🐳 Application Deployment
+# 4️⃣ Deploy Application
 
-Downloaded the sample application:
+Downloaded:
 
 ```bash
 gcloud storage cp -r gs://spls/gsp510/hello-app/ .
 ```
 
-Initially deployed the application with an incorrect image.
+Deployment manifest:
 
-This produced:
+```text
+hello-app/manifests/helloweb-deployment.yaml
+```
+
+The initial deployment intentionally contained an invalid image.
+
+### Error
 
 ```text
 InvalidImageName
 ```
 
-This was intentional because the challenge lab required troubleshooting.
+More specifically:
+
+```text
+Failed to apply default image tag "<todo>":
+couldn't parse image reference "<todo>":
+invalid reference format
+```
+
+This demonstrated Kubernetes troubleshooting.
 
 ---
 
-# 📜 Logs-Based Metric
+# 5️⃣ Logs-Based Metric
 
-Created a logs-based metric:
+Created logs-based metric:
 
 ```text
 pod-image-errors
@@ -476,11 +820,11 @@ Metric type:
 Counter
 ```
 
-The metric tracks image-related errors in Kubernetes workloads.
+The metric tracks image-related errors.
 
 ---
 
-# 🚨 Alerting Policy
+# 6️⃣ Alerting Policy
 
 Created:
 
@@ -492,7 +836,7 @@ Configuration:
 
 ```text
 Rolling Window:
-10 minutes
+10 min
 
 Function:
 Count
@@ -513,9 +857,23 @@ Notification:
 Disabled
 ```
 
+### Concept
+
+```text
+Kubernetes Error
+       ↓
+Cloud Logging
+       ↓
+Logs-Based Metric
+       ↓
+Alerting Policy
+       ↓
+Detect Problem
+```
+
 ---
 
-# 🔧 Fixing the Deployment
+# 7️⃣ Fix Deployment
 
 The incorrect image was replaced with:
 
@@ -523,16 +881,44 @@ The incorrect image was replaced with:
 us-docker.pkg.dev/google-samples/containers/gke/hello-app:1.0
 ```
 
-The old deployment was deleted and the corrected deployment was created.
+Delete old deployment:
+
+```bash
+kubectl delete deployment helloweb -n gmp-hpxg
+```
+
+Deploy corrected manifest:
+
+```bash
+kubectl apply -f hello-app/manifests/helloweb-deployment.yaml -n gmp-hpxg
+```
+
+Verify:
+
+```bash
+kubectl get deployments -n gmp-hpxg
+```
+
+Check Pods:
+
+```bash
+kubectl get pods -n gmp-hpxg
+```
+
+### Expected
+
+```text
+helloweb   1/1   Running
+```
 
 ---
 
-# 🐳 Containerizing Application
+# 🐳 8️⃣ Containerize Application
 
 Updated:
 
 ```text
-main.go
+hello-app/main.go
 ```
 
 Application version:
@@ -541,45 +927,78 @@ Application version:
 2.0.0
 ```
 
-Created a Docker image using the application's Dockerfile.
-
-Image tag:
+Created Docker image:
 
 ```text
 v2
 ```
 
-Pushed the image to:
+The image was pushed to Artifact Registry.
+
+Concept:
 
 ```text
+Source Code
+     ↓
+Dockerfile
+     ↓
+Docker Image
+     ↓
 Artifact Registry
+     ↓
+GKE Deployment
 ```
 
 ---
 
-# 🌐 Exposing Application
+# 9️⃣ Deploy v2
 
-Created a LoadBalancer service:
+The Deployment was updated to use the newly built `v2` image.
+
+Artifact Registry repository:
+
+```text
+hello-repo
+```
+
+---
+
+# 🌐 10️⃣ Expose Application
+
+Created LoadBalancer Service:
 
 ```text
 helloweb-service-qg0s
 ```
 
-The application was exposed externally through the LoadBalancer.
+Application exposed on:
+
+```text
+Port:
+8080
+```
+
+The target port was configured according to the Dockerfile.
+
+---
+
+# 🎯 Final Application Output
 
 Expected response:
 
 ```text
 Hello, world!
 Version: 2.0.0
-Hostname: helloweb-xxxxxxxxxx
+Hostname: helloweb-xxxxxxxxxxxxxxxx
 ```
+
+The hostname is generated dynamically by Kubernetes, so the exact value will differ.
 
 ---
 
 # 🧰 Important kubectl Commands
 
-## Cluster
+## Check cluster
 
 ```bash
 kubectl cluster-info
@@ -597,10 +1016,10 @@ kubectl get nodes
 kubectl get pods
 ```
 
-Detailed Pod information:
+## Pods in namespace
 
 ```bash
-kubectl describe pod <pod-name>
+kubectl get pods -n gmp-hpxg
 ```
 
 ## Deployments
@@ -609,10 +1028,10 @@ kubectl describe pod <pod-name>
 kubectl get deployments
 ```
 
-Detailed deployment:
+## Services
 
 ```bash
-kubectl describe deployment <deployment-name>
+kubectl get services
 ```
 
 ## ReplicaSets
@@ -621,28 +1040,28 @@ kubectl describe deployment <deployment-name>
 kubectl get replicasets
 ```
 
-## Services
-
-```bash
-kubectl get services
-```
-
-Short form:
-
-```bash
-kubectl get svc
-```
-
 ## Namespaces
 
 ```bash
 kubectl get namespaces
 ```
 
-## Create Namespace
+## Describe resource
 
 ```bash
-kubectl create namespace <namespace-name>
+kubectl describe pod <pod-name>
+```
+
+## Logs
+
+```bash
+kubectl logs <pod-name>
+```
+
+## Events
+
+```bash
+kubectl get events
 ```
 
 ## Apply YAML
@@ -657,47 +1076,31 @@ kubectl apply -f file.yaml
 kubectl create -f file.yaml
 ```
 
-## Delete Deployment
+## Delete deployment
 
 ```bash
 kubectl delete deployment <deployment-name>
-```
-
-## Scale
-
-```bash
-kubectl scale deployment <deployment-name> --replicas=5
 ```
 
 ---
 
 # 🔄 Rollout Commands
 
-Check rollout:
-
 ```bash
 kubectl rollout status deployment/<deployment-name>
 ```
-
-View history:
 
 ```bash
 kubectl rollout history deployment/<deployment-name>
 ```
 
-Pause:
-
 ```bash
 kubectl rollout pause deployment/<deployment-name>
 ```
 
-Resume:
-
 ```bash
 kubectl rollout resume deployment/<deployment-name>
 ```
-
-Rollback:
 
 ```bash
 kubectl rollout undo deployment/<deployment-name>
@@ -705,69 +1108,123 @@ kubectl rollout undo deployment/<deployment-name>
 
 ---
 
-# 🔍 Debugging Commands
+# 🧠 Kubernetes Mental Model
 
-Check Pods:
+The most important hierarchy to remember:
 
-```bash
+```text
+                 Deployment
+                      │
+                      ▼
+                 ReplicaSet
+                      │
+                      ▼
+                     Pods
+                      │
+                      ▼
+                 Containers
+```
+
+Networking:
+
+```text
+                    User
+                      │
+                      ▼
+                  Service
+                      │
+          ┌───────────┼───────────┐
+          ▼           ▼           ▼
+         Pod         Pod         Pod
+```
+
+---
+
+# 🔥 Deployment Strategies — Easy Memory
+
+```text
+ROLLING
+───────
+Old → gradually → New
+
+
+CANARY
+──────
+Most Users → Old
+Few Users  → New
+
+
+BLUE-GREEN
+──────────
+Blue = Old
+Green = New
+
+Switch:
+Blue → Green
+```
+
+---
+
+# 🧩 Troubleshooting Flow
+
+When a Kubernetes application is not working:
+
+```text
 kubectl get pods
-```
-
-Detailed information:
-
-```bash
-kubectl describe pod <pod-name>
-```
-
-Check logs:
-
-```bash
-kubectl logs <pod-name>
-```
-
-Follow logs:
-
-```bash
-kubectl logs -f <pod-name>
-```
-
-Check events:
-
-```bash
-kubectl get events
+        ↓
+Is Pod Running?
+        ↓
+     NO
+        ↓
+kubectl describe pod
+        ↓
+Check Events
+        ↓
+kubectl logs
+        ↓
+Find Error
+        ↓
+Fix Manifest / Image / Configuration
+        ↓
+kubectl apply
+        ↓
+Verify Again
 ```
 
 ---
 
-# 🧠 Important Kubernetes Concepts
+# 📊 What I Learned
 
-## Pod
+Through these hands-on labs, I practiced:
 
-Smallest deployable unit in Kubernetes.
-
-```text
-Pod
- └── Container
-```
+* Kubernetes Deployments
+* Pods
+* ReplicaSets
+* Services
+* Scaling
+* Rolling Updates
+* Rollouts
+* Rollbacks
+* Canary Deployments
+* Blue-Green Deployments
+* GKE cluster creation
+* GKE autoscaling
+* Managed Prometheus
+* PodMonitoring
+* Cloud Logging
+* Logs-based metrics
+* Alerting policies
+* Kubernetes troubleshooting
+* Docker image creation
+* Artifact Registry
+* LoadBalancer Services
+* Application deployment on GKE
 
 ---
 
-## ReplicaSet
+# 🏆 Key Takeaways
 
-Maintains the desired number of Pods.
-
-```text
-ReplicaSet
- ├── Pod
- ├── Pod
- └── Pod
-```
-
----
-
-## Deployment
-
-Manages ReplicaSets and application updates.
+### 1. Deployment manages application versions
 
 ```text
 Deployment
@@ -777,11 +1234,7 @@ ReplicaSet
 Pods
 ```
 
----
-
-## Service
-
-Provides stable networking and access to Pods.
+### 2. Service provides stable access
 
 ```text
 Client
@@ -791,179 +1244,52 @@ Service
 Pods
 ```
 
----
-
-# 🧠 Kubernetes Mental Model
-
-Remember this hierarchy:
+### 3. Scaling changes the number of Pods
 
 ```text
-Deployment
-     ↓
-ReplicaSet
-     ↓
-Pods
-     ↓
-Containers
+3 Pods → 5 Pods
 ```
 
-And networking:
+### 4. Rolling Update gradually replaces versions
 
 ```text
-User
- ↓
-Service
- ↓
-Pods
- ↓
-Containers
+v1 → v1/v2 → v2
 ```
 
----
-
-# 🎯 What I Learned
-
-Through these hands-on labs I practiced:
-
-* Creating GKE clusters
-* Managing Kubernetes clusters
-* Working with kubectl
-* Creating Kubernetes YAML manifests
-* Deploying applications
-* Scaling applications
-* Managing ReplicaSets
-* Performing rolling updates
-* Pausing and resuming rollouts
-* Rolling back deployments
-* Implementing Canary deployments
-* Implementing Blue-Green deployments
-* Enabling Managed Prometheus
-* Configuring PodMonitoring
-* Debugging Kubernetes deployment errors
-* Creating logs-based metrics
-* Creating alerting policies
-* Working with Artifact Registry
-* Building Docker images
-* Pushing images to Artifact Registry
-* Exposing applications through LoadBalancer Services
-
----
-
-# 🗺️ Learning Progress
+### 5. Canary reduces deployment risk
 
 ```text
-Docker
-  │
-  ▼
-Kubernetes Basics
-  │
-  ▼
-Pods
-  │
-  ▼
-Deployments
-  │
-  ▼
-ReplicaSets
-  │
-  ▼
-Services
-  │
-  ▼
-Scaling
-  │
-  ▼
-Rolling Updates
-  │
-  ▼
-Rollback
-  │
-  ▼
-Canary Deployment
-  │
-  ▼
-Blue-Green Deployment
-  │
-  ▼
-GKE
-  │
-  ▼
-Managed Prometheus
-  │
-  ▼
-Monitoring & Alerting
-  │
-  ▼
-Artifact Registry
-  │
-  ▼
-Docker + GKE Deployment
+90% → Old
+10% → New
+```
+
+### 6. Blue-Green provides instant traffic switching
+
+```text
+Blue → Green
+```
+
+### 7. Rollback helps recover from bad releases
+
+```text
+v2 → Problem → v1
+```
+
+### 8. Monitoring helps detect problems
+
+```text
+Application
+    ↓
+Metrics / Logs
+    ↓
+Monitoring
+    ↓
+Alert
 ```
 
 ---
 
-# 🚀 Next Learning Goals
-
-The next areas to explore are:
-
-* Kubernetes ConfigMaps
-* Kubernetes Secrets
-* Persistent Volumes
-* Persistent Volume Claims
-* Ingress
-* Helm
-* Kubernetes networking
-* RBAC
-* Service Accounts
-* Horizontal Pod Autoscaler
-* Kubernetes troubleshooting
-* GKE production architecture
-* CI/CD with Kubernetes
-* GitHub Actions + GKE
-* Terraform + GKE
-* Observability
-* Prometheus & Grafana
-
----
-
-# 🏆 Labs Completed
-
-| Lab                 | Topic                                        | Status      |
-| ------------------- | -------------------------------------------- | ----------- |
-| GSP053              | Managing Deployments Using Kubernetes Engine | ✅ Completed |
-| GSP510              | GKE Challenge Lab                            | ✅ Completed |
-| Kubernetes Practice | Deployments & Rollouts                       | ✅ Completed |
-| GKE Monitoring      | Managed Prometheus                           | ✅ Completed |
-
----
-
-# 💡 Key Takeaway
-
-Kubernetes is not just about running containers.
-
-It is about **managing application lifecycle**:
-
-```text
-Deploy
-  ↓
-Scale
-  ↓
-Monitor
-  ↓
-Update
-  ↓
-Detect Problems
-  ↓
-Rollback / Fix
-  ↓
-Release Safely
-```
-
-The deployment strategies learned in these labs help achieve safer and more reliable application releases.
-
----
-
-## 📌 Technologies
+# 🛠️ Technology Stack
 
 ```text
 Kubernetes
@@ -981,8 +1307,113 @@ Google Cloud
 
 ---
 
-# ⭐ Repository Purpose
+# 🚀 Next Learning Goals
 
-This repository documents my practical journey of learning and implementing Kubernetes and GKE concepts through hands-on Google Cloud labs.
+After completing these labs, the next Kubernetes topics to learn are:
 
-It focuses on **practical commands, troubleshooting, deployment strategies, monitoring, and real-world DevOps practices**.
+```text
+ConfigMaps
+    ↓
+Secrets
+    ↓
+Persistent Volumes
+    ↓
+Persistent Volume Claims
+    ↓
+Ingress
+    ↓
+RBAC
+    ↓
+Service Accounts
+    ↓
+Horizontal Pod Autoscaler
+    ↓
+Helm
+    ↓
+Kubernetes Networking
+    ↓
+Prometheus + Grafana
+    ↓
+CI/CD + Kubernetes
+    ↓
+Terraform + GKE
+```
+
+---
+
+# ⭐ Final Takeaway
+
+These labs helped me understand that Kubernetes is not simply a platform for running containers.
+
+It provides a complete system for managing the application lifecycle:
+
+```text
+             ┌─────────────┐
+             │   Deploy    │
+             └──────┬──────┘
+                    ↓
+             ┌─────────────┐
+             │    Scale    │
+             └──────┬──────┘
+                    ↓
+             ┌─────────────┐
+             │   Monitor   │
+             └──────┬──────┘
+                    ↓
+             ┌─────────────┐
+             │   Update    │
+             └──────┬──────┘
+                    ↓
+             ┌─────────────┐
+             │   Detect    │
+             │   Problems  │
+             └──────┬──────┘
+                    ↓
+             ┌─────────────┐
+             │ Fix/Rollback│
+             └──────┬──────┘
+                    ↓
+             ┌─────────────┐
+             │ Safe Release│
+             └─────────────┘
+```
+
+---
+
+# 📌 Repository Status
+
+```text
+Kubernetes Learning
+        │
+        ├── GSP053 ✅
+        │
+        ├── GSP510 ✅
+        │
+        ├── Deployments ✅
+        │
+        ├── Scaling ✅
+        │
+        ├── Rolling Updates ✅
+        │
+        ├── Rollback ✅
+        │
+        ├── Canary ✅
+        │
+        ├── Blue-Green ✅
+        │
+        ├── GKE ✅
+        │
+        ├── Managed Prometheus ✅
+        │
+        ├── Monitoring ✅
+        │
+        ├── Logging & Alerting ✅
+        │
+        └── Docker + Artifact Registry ✅
+```
+
+---
+
+## 👨‍💻 Learning by Doing
+
+> The goal of this repository is not just to memorize Kubernetes commands, but to understand how Kubernetes is used to deploy, scale, monitor, troubleshoot and safely release applications in real-world environments.
