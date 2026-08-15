@@ -6,6 +6,7 @@ This lab demonstrates how to collect application metrics using **Google Cloud Ma
 
 The lab focuses on deploying a Prometheus exporter application on Google Kubernetes Engine (GKE), configuring Pod Monitoring, and verifying that metrics are collected successfully.
 
+![Architecture](lab2.png)
 ---
 
 ## 🎯 Objectives
