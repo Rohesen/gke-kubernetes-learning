@@ -657,3 +657,6 @@ Kubernetes Debugging
 ---
 
 > This repository documents my hands-on learning and practical experience with Kubernetes and Google Kubernetes Engine (GKE).
+
+## Interview Questions
+ ![InterviewQnA](lab1question.png)
