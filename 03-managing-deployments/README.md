@@ -10,6 +10,7 @@ The lab also covers important deployment strategies used in real-world DevOps en
 - Canary Deployments
 - Blue-Green Deployments
 
+![Architecture](lab3.png)
 ---
 
 # 🎯 Objectives
