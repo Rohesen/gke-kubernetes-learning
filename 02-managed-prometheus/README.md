@@ -473,3 +473,6 @@ This provides a scalable monitoring solution for Kubernetes applications running
 **Monitoring:** Managed Service for Prometheus
 
 **Repository:** gke-kubernetes-learning
+
+## Interview Questions
+ ![InterviewQnA](lab2question.png)
