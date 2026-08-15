@@ -6,6 +6,7 @@ This lab focuses on debugging applications running on **Google Kubernetes Engine
 
 The lab simulates a production-style troubleshooting scenario where an application contains an intentional configuration issue. The objective is to detect the problem using monitoring and logs, identify the root cause, fix it, and verify that the application is working correctly.
 
+![Architecture](lab1.png)
 ---
 
 ## 🎯 Objectives
@@ -23,7 +24,7 @@ In this lab, I practiced:
 - Debugging Kubernetes workloads
 - Fixing an application configuration issue
 - Verifying that the application is healthy after the fix
-
+  
 ---
 
 ## 🏗️ Technologies Used
