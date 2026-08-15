@@ -6,6 +6,7 @@ This challenge lab demonstrates practical Kubernetes and Google Kubernetes Engin
 
 Unlike a guided lab, this challenge lab requires solving tasks independently using Kubernetes, GKE, Artifact Registry, Docker, Cloud Logging, and Managed Prometheus.
 
+![Architecture](lab4.png)
 ---
 
 # 🎯 Lab Objectives
