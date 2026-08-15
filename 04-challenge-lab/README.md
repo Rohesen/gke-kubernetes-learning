@@ -804,3 +804,6 @@ This challenge lab connected multiple DevOps concepts into one real-world workfl
 **Platform:** Google Cloud Skills Boost
 
 **Focus:** GKE + Kubernetes + Prometheus + Monitoring + Docker + Artifact Registry
+
+## Interview Questions
+ ![InterviewQnA](lab4question.png)
