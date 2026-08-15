@@ -5,6 +5,8 @@
 ![GKE](https://img.shields.io/badge/GKE-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
+![Architecture](lab5.png)
+
 > My hands-on journey of learning Kubernetes, Google Kubernetes Engine (GKE), deployments, rollout strategies, monitoring, troubleshooting, Docker and Artifact Registry.
 
 ---
