@@ -927,3 +927,6 @@ The biggest lesson from this lab was understanding **how Kubernetes manages appl
 **Platform:** Google Cloud Skills Boost
 
 **Technologies:** Kubernetes, GKE, kubectl, Docker, DevOps
+
+## Interview Questions
+ ![InterviewQnA](lab3question.png)
